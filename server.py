@@ -2,6 +2,9 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+#mock data
+api = [{'status': 1, 'product': {'product_name': 'pizza', 'brand': 'Digorno', 'ingredients': ['cheese', 'sauce', 'dough']}},
+        {'status': 2, 'product': {'product_name': 'burger', 'brand': 'McDonalds', 'ingredients': ['bun', 'patty', 'lettuce']}}]
 
 @app.route('/inventory', methods=['GET'])
 def get_inventory():
