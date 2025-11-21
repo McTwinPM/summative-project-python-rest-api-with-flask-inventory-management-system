@@ -2,6 +2,7 @@ import json
 import uuid
 import os
 from datetime import datetime
+from server import mock_inventory, project
 
 class Product:
     def __init__(self, product_name, brand, ingredients):
@@ -19,4 +20,19 @@ class Product:
             'ingredients': self.ingredients,
             'status': self.status
         }
+    def remove(self):
+        if project in mock_inventory:
+            mock_inventory.remove(project)
+    @classmethod
+    def from_dict(cls, data):
+        product = cls(
+            product_name=data.get('product_name', 'N/A'),
+            brand=data.get('brand', 'N/A'),
+            ingredients=data.get('ingredients', [])
+        )
+        product.id = data.get('id', str(uuid.uuid4()))
+        product.status = data.get('status', 1)
+        return product
     
+    def change_status(self, new_status):
+        self.status = int(new_status)
