@@ -2,31 +2,35 @@ import json
 import uuid
 import os
 from datetime import datetime
-from inventory_data import mock_inventory
+# from API.inventory_data import mock_inventory
+
+# mock_inventory = "http://localhost:5000/inventory"
 
 class Product:
-    def __init__(self, product_name, brand, ingredients):
+    def __init__(self, barcode, product_name, brand, ingredients, price=0.0):
         self.id = str(uuid.uuid4())
+        self.barcode = barcode
         self.product_name = product_name
         self.brand = brand
         self.ingredients = ingredients
         self.status = 1  # Default status
+        self.price = price
 
     def to_dict(self):
         return {
             'id': self.id,
-            'product_name': self.product_name,
+            'barcode': self.barcode,
+            'product_name': self.product_name,            
             'brand': self.brand,
             'ingredients': self.ingredients,
-            'status': self.status
+            'status': self.status,
+            'price': self.price  
         }
-    def remove(self):
-        product_dict = self.to_dict()
-        if product_dict in mock_inventory:
-            mock_inventory.remove(product_dict)
+
     @classmethod
     def from_dict(cls, data):
         product = cls(
+            barcode=data.get('barcode', 'N/A'),
             product_name=data.get('product_name', 'N/A'),
             brand=data.get('brand', 'N/A'),
             ingredients=data.get('ingredients', [])
@@ -37,3 +41,7 @@ class Product:
     
     def change_status(self, new_status):
         self.status = int(new_status)
+    
+
+    def update_price(self, new_price):
+        self.price = float(new_price)
