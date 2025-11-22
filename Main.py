@@ -6,8 +6,9 @@ from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.text import Text
-from server import mock_inventory, fetch_openfoodfacts_data
+from server import fetch_openfoodfacts_data
 from CLI.Classes import Product
+from inventory_data import mock_inventory
 
 console = Console()
 
@@ -35,24 +36,26 @@ def display_products():
 
 def main():
     fetch_openfoodfacts_data()
-    display_products()
+    
 
     parser = argparse.ArgumentParser(
-        description= "Food Inventory Management CLI"
+        description= "Food Inventory Management CLI/n"
+
     )
     subparser = parser.add_subparsers(dest='command', help='Available commands')
 
+    #product commands
     product_parser = subparser.add_parser('product', help='Product related commands')
     product_subparsers = product_parser.add_subparsers(dest='product_command')
-
+    #create product 
     add_product = product_subparsers.add_parser('add', help='Add a new product')
-    add_product.add_argument('name', required=True, help='Name of the product')
-    add_product.add_argument('brand', required=True, help='Brand of the product')
+    add_product.add_argument('name', help='Name of the product')
+    add_product.add_argument('brand', help='Brand of the product')
     add_product.add_argument('ingredients', nargs='+', help='List of ingredients')
-
+    #remove product
     remove_product = product_subparsers.add_parser('remove', help='Remove a product')
-    remove_product.add_argument('id', required=True, help='ID of the product to remove')
-
+    remove_product.add_argument('id', help='ID of the product to remove')
+    #list products
     product_subparsers.add_parser('list', help='List all products')
 
     args = parser.parse_args()

@@ -2,7 +2,7 @@ import json
 import uuid
 import os
 from datetime import datetime
-from server import mock_inventory, project
+from inventory_data import mock_inventory
 
 class Product:
     def __init__(self, product_name, brand, ingredients):
@@ -21,8 +21,9 @@ class Product:
             'status': self.status
         }
     def remove(self):
-        if project in mock_inventory:
-            mock_inventory.remove(project)
+        product_dict = self.to_dict()
+        if product_dict in mock_inventory:
+            mock_inventory.remove(product_dict)
     @classmethod
     def from_dict(cls, data):
         product = cls(
