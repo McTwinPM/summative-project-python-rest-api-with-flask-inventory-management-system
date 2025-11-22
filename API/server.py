@@ -1,8 +1,10 @@
 import base64
 from flask import Flask, jsonify, request
 import requests
-from inventory_data import fetch_product_by_barcode, fetch_product_by_name, mock_inventory
-
+try:
+    from inventory_data import fetch_product_by_barcode, fetch_product_by_name, mock_inventory
+except ModuleNotFoundError:
+    from API.inventory_data import fetch_product_by_barcode, fetch_product_by_name, mock_inventory
 app = Flask(__name__)
 
 
