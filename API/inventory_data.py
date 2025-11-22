@@ -1,30 +1,4 @@
 import requests
-# def fetch_openfoodfacts_data():
-#     try:
-        
-#         response = requests.get(
-#             "https://world.openfoodfacts.org/cgi/search.pl?search_terms=pizza&page_size=5&json=1", 
-#             params={
-#                 'search_terms': 'pizza',
-#                 'page_size': 10,
-#                 'json': 1
-#             }
-#         )
-        
-#         print(f"API Status Code: {response.status_code}")
-#         if response.status_code == 200:
-#             external_data = response.json()
-#             for item in external_data.get('products', []):
-#                 product = {
-#                     'id': item.get('id', len(mock_inventory) + 1),
-#                     'product_name': item.get('product_name', 'N/A'),
-#                     'brand': item.get('brands', 'N/A'),
-#                     'ingredients': item.get('ingredients_text', 'N/A').split(', '),
-#                     'status': 1  # Default status
-#                 }
-#                 mock_inventory.append(product)
-#     except Exception as e:
-#         print(f"Error fetching data from OpenFoodFacts: {e}")
 
 mock_inventory = []
 
@@ -60,7 +34,7 @@ def populate_inventory_with_many_products(max_products=50):
             response = requests.get(
                 f'{real_url}/cgi/search.pl',
                 params={
-                    'search_terms': '',  # Empty = all products
+                    'search_terms': '',  
                     'page': page,
                     'page_size': page_size,
                     'json': 1
@@ -71,7 +45,7 @@ def populate_inventory_with_many_products(max_products=50):
                 data = response.json()
                 products = data.get('products', [])
                 
-                if not products:  # No more products
+                if not products:  
                     break
                 
                 for product in products:
