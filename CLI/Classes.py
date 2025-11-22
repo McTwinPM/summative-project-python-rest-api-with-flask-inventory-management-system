@@ -2,9 +2,6 @@ import json
 import uuid
 import os
 from datetime import datetime
-# from API.inventory_data import mock_inventory
-
-# mock_inventory = "http://localhost:5000/inventory"
 
 class Product:
     def __init__(self, barcode, product_name, brand, ingredients, price=0.0):
@@ -13,7 +10,7 @@ class Product:
         self.product_name = product_name
         self.brand = brand
         self.ingredients = ingredients
-        self.status = 1  # Default status
+        self.status = 1  
         self.price = price
 
     def to_dict(self):
